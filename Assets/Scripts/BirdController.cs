@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class BirdController : MonoBehaviour
 {
 
-    private float jumpForce = 5f;
+    private float jumpForce = 4f;
     private Rigidbody2D rb;
     private Controls controls;
 
@@ -39,10 +39,22 @@ public class BirdController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Pipe"))
         {
-            Debug.Log("Collided with floor!");
+            Debug.Log("Collision detected");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            Debug.Log("Collision with: " + collision.gameObject.name);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Score"))
+        {
+            Debug.Log("Score Triggered");
         }
     }
 }
